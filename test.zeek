@@ -13,8 +13,8 @@ event http_reply(c: connection, version: string, code: count, reason: string)
 event zeek_init()
 {
     local r1 = SumStats::Reducer($stream="http_all_resp", $apply=set(SumStats::SUM));
-	  local r2 = SumStats::Reducer($stream="http_404_resp", $apply=set(SumStats::SUM));
-	  local r3 = SumStats::Reducer($stream="http_url_404_resp", $apply=set(SumStats::UNIQUE));
+    local r2 = SumStats::Reducer($stream="http_404_resp", $apply=set(SumStats::SUM));
+    local r3 = SumStats::Reducer($stream="http_url_404_resp", $apply=set(SumStats::UNIQUE));
 
     SumStats::create([$name = "scanner", $epoch = 10mins, $reducers = set(r1, r2, r3),
         $epoch_result(ts: time, key: SumStats::Key, result: SumStats::Result) =
